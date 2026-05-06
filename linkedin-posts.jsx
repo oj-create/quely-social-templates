@@ -91,18 +91,7 @@ function PostMinimal({ t }) {
           shadow="0 22px 50px -22px rgba(40,30,60,0.28), 0 6px 14px -6px rgba(40,30,60,0.18)" />
       </div>
 
-      {/* Hand-drawn arrow from right margin pointing to screenshot */}
-      <svg style={{
-        position: 'absolute', top: 130, left: 868, zIndex: 4,
-        pointerEvents: 'none'
-      }} width="220" height="160" viewBox="0 0 220 160" fill="none">
-        <path d="M 200 20 C 130 30, 70 60, 30 110"
-          stroke="#5C28A4" strokeWidth="3" fill="none" strokeLinecap="round" />
-        <path d="M 30 110 L 50 96 M 30 110 L 44 130"
-          stroke="#5C28A4" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-
-      {/* Right margin handwritten reaction */}
+      {/* Right margin handwritten reaction & arrow */}
       <div style={{
         position: 'absolute', top: 70, right: 36, zIndex: 5,
         width: 240, transform: 'rotate(2deg)',
@@ -111,6 +100,19 @@ function PostMinimal({ t }) {
       }}>
         <div style={{ fontSize: 28, fontWeight: 700, marginBottom: 4 }}>{t.v1_circleHighlight}</div>
         <div style={{ fontSize: 22, color: '#4B3868' }}>{t.v1_circleSub}</div>
+
+        {/* Hand-drawn arrow pointing to screenshot */}
+        <svg style={{
+          display: 'block',
+          marginTop: 8,
+          marginLeft: -56,
+          pointerEvents: 'none'
+        }} width="220" height="120" viewBox="0 0 220 120" fill="none">
+          <path d="M 180 10 C 120 20, 60 40, 10 90"
+            stroke="#5C28A4" strokeWidth="3" fill="none" strokeLinecap="round" />
+          <path d="M 10 90 L 30 76 M 10 90 L 22 108"
+            stroke="#5C28A4" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
       </div>
 
       {/* Bottom-left margin note */}
