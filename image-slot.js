@@ -283,7 +283,11 @@
       });
       // naturalWidth/Height aren't known until load — re-apply so the cover
       // baseline is computed from real dimensions, not the 100%×100% fallback.
-      this._img.addEventListener('load', () => this._applyView());
+      this._img.addEventListener('load', () => {
+        this._applyView();
+        const g = this._geom();
+        if (g) this.dispatchEvent(new CustomEvent('image-size', { detail: { w: g.iw, h: g.ih }, bubbles: true }));
+      });
       // Gated on editable + fit=cover so share links and contain/fill slots
       // stay static.
       this.addEventListener('dblclick', (e) => {
@@ -625,12 +629,15 @@
         this.setAttribute('data-filled', '');
         this._clampView();
         this._applyView();
+        const g = this._geom();
+        if (g && g.iw) this.dispatchEvent(new CustomEvent('image-size', { detail: { w: g.iw, h: g.ih }, bubbles: true }));
       } else {
         this._img.style.display = 'none';
         this._img.removeAttribute('src');
         this._ghost.removeAttribute('src');
         this._empty.style.display = 'flex';
         this.removeAttribute('data-filled');
+        this.dispatchEvent(new CustomEvent('image-size', { detail: null, bubbles: true }));
       }
     }
   }

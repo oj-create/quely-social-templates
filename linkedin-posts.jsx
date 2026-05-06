@@ -30,22 +30,51 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
    Each variation passes its own id so users can have different screenshots
    per variation if they want. */
 function ScreenshotSlot({ id, width, height, tilt = 0, shadow }) {
+  const [imgSize, setImgSize] = React.useState(null);
+  const ref = React.useRef(null);
+
+  React.useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const onSize = (e) => setImgSize(e.detail);
+    el.addEventListener('image-size', onSize);
+    return () => el.removeEventListener('image-size', onSize);
+  }, []);
+
+  let boxW = width;
+  let boxH = height;
+  if (imgSize && imgSize.w && imgSize.h) {
+    const scale = Math.min(width / imgSize.w, height / imgSize.h);
+    boxW = imgSize.w * scale;
+    boxH = imgSize.h * scale;
+  }
+
   return (
     <div style={{
       width, height,
-      transform: `rotate(${tilt}deg)`,
-      boxShadow: shadow,
-      borderRadius: 14,
-      overflow: 'hidden'
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      transform: `rotate(${tilt}deg)`
     }}>
-      <image-slot
-        id={id}
-        style={{ width: '100%', height: '100%', display: 'block' }}
-        shape="rounded"
-        radius="14"
-        fit="contain"
-        placeholder="Drop a Reddit screenshot here"
-      />
+      <div style={{
+        width: boxW,
+        height: boxH,
+        boxShadow: shadow,
+        borderRadius: 14,
+        overflow: 'hidden',
+        transition: 'width 0.2s, height 0.2s'
+      }}>
+        <image-slot
+          ref={ref}
+          id={id}
+          style={{ width: '100%', height: '100%', display: 'block' }}
+          shape="rounded"
+          radius="14"
+          fit="cover"
+          placeholder="Drop a Reddit screenshot here"
+        />
+      </div>
     </div>
   );
 }
