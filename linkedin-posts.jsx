@@ -108,9 +108,9 @@ function PostMinimal({ t }) {
           marginLeft: -56,
           pointerEvents: 'none'
         }} width="220" height="120" viewBox="0 0 220 120" fill="none">
-          <path d="M 180 10 C 120 20, 60 40, 10 90"
+          <path d="M 180 0 C 120 10, 60 35, 10 85"
             stroke="#5C28A4" strokeWidth="3" fill="none" strokeLinecap="round" />
-          <path d="M 10 90 L 30 76 M 10 90 L 22 108"
+          <path d="M 10 85 L 30 80 M 10 85 L 15 65"
             stroke="#5C28A4" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </div>
