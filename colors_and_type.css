@@ -1,0 +1,594 @@
+/* ============================================================
+   Quely Design System — Core tokens
+   Source of truth: Quely DS Figma file (April 2026 update).
+
+   THREE surface modes:
+     1. Default / Product (LIGHT)  — Inter, zinc-900 primary, white cards on
+        zinc-50 panels. This is what the in-product UI looks like, and what
+        every Figma component documents. The defaults below are this surface.
+     2. Product DARK                — same component shapes, mirrored against
+        rgb(3,7,18) bg. Apply with [data-theme="dark"] on the element.
+     3. Marketing / Cosmic          — pure black, planet, glow, Geist Sans.
+        Apply with class="cosmic-scene" or [data-surface="marketing"].
+
+   Brand color (#5C28A4 / quely-purple) is reserved for:
+     - The logo + marketing site
+     - "Brand Primary" button variant in product (one-off CTAs)
+     - Brand badges / pills
+   It is NOT the default product accent. Default Primary is dark zinc-900.
+
+   Typography:
+     - Product (default): Inter — matches every Figma component
+     - Marketing: Geist Sans + Geist Mono
+     - Numerics inside timers: "Digital Numbers" (fallback Geist Mono)
+   ============================================================ */
+
+/* ---- Webfonts ------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Geist+Mono:wght@400;500;600&display=swap');
+
+:root {
+  /* ============================================================
+     RAW SCALES — referenced by semantic tokens below.
+     Names match Tailwind to keep the Figma-to-code map obvious.
+     ============================================================ */
+
+  /* Gray / zinc — the dominant neutral in every Figma component */
+  --gray-50:   #F9FAFB;     /* rgb(249,250,251) — panel bg */
+  --gray-100:  #F3F4F6;     /* rgb(243,244,246) — dividers, fills */
+  --gray-200:  #E5E7EB;     /* rgb(229,231,235) — primary borders */
+  --gray-300:  #D1D5DB;     /* rgb(209,213,219) */
+  --gray-400:  #9CA3AF;     /* rgb(156,163,175) — placeholder, disabled icon */
+  --gray-500:  #6B7280;
+  --gray-600:  #4B5563;     /* rgb(75,85,99) — muted text */
+  --gray-700:  #374151;
+  --gray-800:  #1F2937;     /* rgb(31,41,55) — secondary surfaces in dark */
+  --gray-900:  #111827;     /* rgb(17,24,39) — Primary button bg, fg on light */
+  --gray-950:  #030712;     /* rgb(3,7,18)  — Body fg, dark surface bg */
+
+  /* Brand purple — reserved (see header) */
+  --brand-50:  #F4ECFE;
+  --brand-100: #E5D5FB;
+  --brand-200: #CCABF7;
+  --brand-300: #B585F2;
+  --brand-400: #9747FF;     /* rgb(151,71,255) — link/accent hover on light */
+  --brand-500: #8D4BF6;     /* rgb(141,75,246) */
+  --brand-600: #5C28A4;     /* rgb(92,40,164) — Brand Primary button bg */
+  --brand-700: #4A1F87;
+  --brand-800: #381668;
+  --brand-glow:rgba(171,132,225,0.45);  /* rgb(171,132,225) — DS shadow */
+
+  /* Indigo — informative variant (rgb(79,70,229) confirmed in Figma) */
+  --indigo-50:  #EEF2FF;
+  --indigo-100: #E0E7FF;
+  --indigo-500: #6366F1;
+  --indigo-600: #4F46E5;     /* rgb(79,70,229) — informative border */
+  --indigo-700: #4338CA;
+
+  /* Status — sampled directly from Figma */
+  --red-500:   #EF4444;     /* rgb(239,68,68)  — destructive border */
+  --red-600:   #DC2626;     /* rgb(220,38,38)  — danger button bg */
+  --green-600: #16A34A;     /* rgb(22,163,74)  — success border */
+  --amber-600: #D97706;     /* rgb(217,119,6)  — warning border */
+  --blue-500:  #0C8CE9;     /* rgb(12,140,233) — Figma highlight (UI-only) */
+
+  /* Marketing-only warm accent (illustration fills, never UI chrome) */
+  --quely-amber:      #F7A325;
+  --quely-amber-soft: #F6D08A;
+
+  /* ============================================================
+     SEMANTIC TOKENS — light product surface (DEFAULT).
+     Mirror of the white-card panels in every Figma documentation frame.
+     ============================================================ */
+
+  /* Surfaces */
+  --bg:          var(--gray-50);            /* page / panel bg */
+  --bg-elev:     #FFFFFF;                   /* cards, popovers */
+  --bg-sunken:   var(--gray-100);           /* inputs, wells */
+  --bg-muted:    var(--gray-100);
+  --bg-tint:     var(--brand-50);           /* soft brand wash, sparingly */
+
+  /* Foreground */
+  --fg:          var(--gray-950);           /* primary text  rgb(3,7,18) */
+  --fg-strong:   var(--gray-900);           /* button-grade dark */
+  --fg-muted:    var(--gray-600);           /* secondary text */
+  --fg-subtle:   var(--gray-400);           /* placeholders, captions */
+  --fg-on-dark:  #FFFFFF;
+  --fg-inverse:  #FFFFFF;
+
+  /* Borders */
+  --border:        var(--gray-200);
+  --border-strong: var(--gray-300);
+  --border-faint:  var(--gray-100);
+  --border-shadow: rgba(0,0,0,0.08);        /* the ubiquitous DS button stroke */
+
+  /* Focus / ring */
+  --ring:        var(--gray-900);           /* primary focus = dark, not brand */
+  --ring-soft:   rgba(17,24,39,0.18);
+  --ring-brand:  var(--brand-600);
+  --ring-danger: var(--red-600);
+
+  /* Action — DEFAULT is dark, not purple. */
+  --action-primary-bg:    var(--gray-900);  /* #111827 */
+  --action-primary-fg:    #FFFFFF;
+  --action-primary-hover: var(--gray-950);  /* #030712 */
+  --action-primary-press: #000000;
+
+  --action-secondary-bg:    #FFFFFF;
+  --action-secondary-fg:    var(--gray-950);
+  --action-secondary-hover: var(--gray-50);
+  --action-secondary-border:var(--border-shadow);
+
+  --action-brand-bg:    var(--brand-600);   /* #5C28A4 — Brand Primary */
+  --action-brand-fg:    #FFFFFF;
+  --action-brand-hover: var(--brand-700);
+  --action-brand-press: var(--brand-800);
+
+  --action-danger-bg:    var(--red-600);
+  --action-danger-fg:    #FFFFFF;
+  --action-danger-hover: #B91C1C;
+  --action-danger-border:var(--red-500);
+
+  --action-ghost-fg:    var(--gray-950);
+  --action-ghost-hover: var(--gray-100);
+  --action-ghost-press: var(--gray-200);
+
+  /* Status surfaces (used by Badge / Alert variants) */
+  --status-success-fg:   var(--green-600);
+  --status-success-bg:   #DCFCE7;
+  --status-success-border:#BBF7D0;
+
+  --status-danger-fg:    var(--red-600);
+  --status-danger-bg:    #FEE2E2;
+  --status-danger-border:#FECACA;
+
+  --status-warning-fg:   var(--amber-600);
+  --status-warning-bg:   #FEF3C7;
+  --status-warning-border:#FDE68A;
+
+  --status-info-fg:      var(--indigo-600);
+  --status-info-bg:      var(--indigo-50);
+  --status-info-border:  var(--indigo-100);
+
+  --status-brand-fg:     var(--brand-600);
+  --status-brand-bg:     var(--brand-50);
+  --status-brand-border: var(--brand-100);
+
+  /* ::selection — uses brand purple as the brand signal */
+  --selection-bg: var(--brand-600);
+  --selection-fg: #FFFFFF;
+
+  /* ============================================================
+     RADII — Figma uses 8 almost everywhere. Pill for chips.
+     ============================================================ */
+  --radius-xs:  4px;
+  --radius-sm:  6px;
+  --radius-md:  8px;       /* DS default — buttons, inputs, cards */
+  --radius-lg:  12px;      /* sections, large cards */
+  --radius-xl:  16px;
+  --radius-2xl: 24px;
+  --radius-pill:9999px;
+
+  /* ============================================================
+     ELEVATION — DS uses very flat shadows.
+     ============================================================ */
+  --shadow-stroke:    0 0 0 1px rgba(0,0,0,0.08);          /* the button stroke */
+  --shadow-card:      0 1px 2px 0 rgba(3,7,18,0.10);       /* the card shadow used in every doc frame */
+  --shadow-sm:        0 1px 2px 0 rgba(3,7,18,0.06);
+  --shadow-md:        0 4px 8px -2px rgba(3,7,18,0.10), 0 1px 2px 0 rgba(3,7,18,0.06);
+  --shadow-lg:        0 12px 24px -8px rgba(3,7,18,0.14), 0 2px 4px 0 rgba(3,7,18,0.06);
+  --shadow-pop:       0 12px 32px -8px rgba(16,16,24,0.12);
+  --shadow-glow:      0 0 0 4px var(--ring-soft);
+  --shadow-glow-brand:0 0 0 4px rgba(171,132,225,0.45);
+  /* marketing signature */
+  --shadow-diffusion: 0 20px 40px -15px rgba(0,0,0,0.05);
+
+  /* ============================================================
+     SPACING — 4px base
+     ============================================================ */
+  --space-0:  0;
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  --container-max: 1400px;
+  --container-pad: 24px;
+
+  /* ============================================================
+     TYPOGRAPHY
+     Product (default) = Inter. Marketing = Geist.
+     ============================================================ */
+  --font-product:  'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --font-marketing:'Geist', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --font-mono:     'Geist Mono', ui-monospace, 'SF Mono', Menlo, Monaco, monospace;
+  --font-sans:     var(--font-product);   /* default */
+  --font-display:  var(--font-product);
+
+  /* Type scale — product surface uses fixed 12/14/16/18.
+     Display sizes are reserved for marketing. */
+  --fs-micro:     11px;     /* tiny meta, table footers */
+  --fs-caption:   12px;     /* DS text default for captions */
+  --fs-body-sm:   14px;     /* buttons, inputs, body */
+  --fs-body:      14px;     /* product body — Figma uses 14 by far */
+  --fs-body-lg:   16px;
+  --fs-h4:        16px;
+  --fs-h3:        18px;
+  --fs-h2:        24px;
+  --fs-h1:        32px;
+  --fs-display-lg: clamp(36px, 4vw, 56px);
+  --fs-display-xl: clamp(44px, 5.5vw, 72px);
+  --fs-display-2xl:clamp(56px, 7vw, 96px);
+
+  --tracking-tight:   -0.02em;
+  --tracking-tighter: -0.04em;
+  --tracking-display: -0.05em;
+  --tracking-wide:     0.06em;
+  --tracking-normal:   0;
+
+  --lh-display: 1.05;
+  --lh-heading: 1.2;
+  --lh-tight:   1.25;
+  --lh-body:    1.5;
+
+  --fw-regular:  400;
+  --fw-medium:   500;
+  --fw-semibold: 600;
+  --fw-bold:     700;
+  --fw-extrabold:800;
+}
+
+/* ============================================================
+   PRODUCT DARK SURFACE
+   The same components on rgb(3,7,18) — every Figma frame ships
+   a light + dark pair. Apply with [data-theme="dark"].
+   ============================================================ */
+[data-theme="dark"] {
+  --bg:          var(--gray-950);
+  --bg-elev:     var(--gray-900);
+  --bg-sunken:   #000000;
+  --bg-muted:    var(--gray-800);
+  --bg-tint:     rgba(92,40,164,0.16);
+
+  --fg:          #FFFFFF;
+  --fg-strong:   #FFFFFF;
+  --fg-muted:    rgba(255,255,255,0.72);
+  --fg-subtle:   rgba(255,255,255,0.50);
+
+  --border:        rgba(255,255,255,0.10);
+  --border-strong: rgba(255,255,255,0.18);
+  --border-faint:  rgba(255,255,255,0.05);
+  --border-shadow: rgba(255,255,255,0.10);
+
+  --action-primary-bg:    #FFFFFF;
+  --action-primary-fg:    var(--gray-950);
+  --action-primary-hover: rgba(255,255,255,0.92);
+  --action-primary-press: rgba(255,255,255,0.85);
+
+  --action-secondary-bg:    rgba(255,255,255,0.06);
+  --action-secondary-fg:    #FFFFFF;
+  --action-secondary-hover: rgba(255,255,255,0.10);
+  --action-secondary-border:rgba(255,255,255,0.10);
+
+  --action-ghost-fg:    #FFFFFF;
+  --action-ghost-hover: rgba(255,255,255,0.06);
+  --action-ghost-press: rgba(255,255,255,0.10);
+
+  --ring:        #FFFFFF;
+  --ring-soft:   rgba(255,255,255,0.18);
+
+  --shadow-card: 0 1px 2px 0 rgba(0,0,0,0.5);
+  --shadow-stroke:0 0 0 1px rgba(255,255,255,0.10);
+
+  --selection-bg: var(--brand-500);
+  --selection-fg: #FFFFFF;
+}
+
+/* ============================================================
+   MARKETING SURFACE (cosmic) — apply with class .cosmic-scene
+   or [data-surface="marketing"]. Switches to Geist + dark.
+   ============================================================ */
+[data-surface="marketing"],
+.cosmic-scene {
+  --font-sans:    var(--font-marketing);
+  --font-display: var(--font-marketing);
+  --bg:          #000000;
+  --bg-elev:     #0A0A0C;
+  --fg:          #FFFFFF;
+  --fg-muted:    rgba(255,255,255,0.72);
+  --fg-subtle:   rgba(255,255,255,0.52);
+  --border:      rgba(255,255,255,0.10);
+  --border-strong:rgba(255,255,255,0.18);
+  --action-primary-bg:    #0B0A0B;
+  --action-primary-fg:    #FFFFFF;
+  --selection-bg: var(--brand-600);
+}
+
+/* ============================================================
+   ELEMENT STYLES — drop-in defaults
+   ============================================================ */
+html, body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  font-feature-settings: "ss01", "cv11";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection { background: var(--selection-bg); color: var(--selection-fg); }
+
+/* Headings — product default uses Inter; marketing reassigns via --font-display */
+h1, .h1 {
+  font-family: var(--font-display);
+  font-size: var(--fs-h1);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--tracking-tight);
+  font-weight: var(--fw-bold);
+  color: var(--fg);
+}
+h2, .h2 {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--tracking-tight);
+  font-weight: var(--fw-semibold);
+}
+h3, .h3 {
+  font-size: var(--fs-h3);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  font-weight: var(--fw-semibold);
+}
+h4, .h4 {
+  font-size: var(--fs-h4);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--tracking-tight);
+}
+
+.display-2xl, .display-xl, .display-lg {
+  font-family: var(--font-display);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-display);
+  letter-spacing: var(--tracking-display);
+  color: var(--fg);
+}
+.display-2xl { font-size: var(--fs-display-2xl); }
+.display-xl  { font-size: var(--fs-display-xl); }
+.display-lg  { font-size: var(--fs-display-lg); }
+
+p, .body {
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--fg-muted);
+  text-wrap: pretty;
+}
+.lead    { font-size: var(--fs-body-lg); line-height: 1.5; color: var(--fg-muted); }
+.caption { font-size: var(--fs-caption); color: var(--fg-subtle); }
+
+code, kbd, pre, .mono {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+}
+code {
+  background: var(--bg-sunken);
+  padding: 2px 6px;
+  border-radius: var(--radius-xs);
+  color: var(--fg);
+}
+
+/* Eyebrow */
+.eyebrow {
+  font-size: var(--fs-micro);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  font-weight: var(--fw-medium);
+  color: var(--fg-muted);
+}
+
+a { color: var(--fg); text-decoration: underline; text-underline-offset: 2px; text-decoration-thickness: 1px; text-decoration-color: var(--border-strong); }
+a:hover { text-decoration-color: currentColor; }
+
+hr { border: 0; border-top: 1px solid var(--border); }
+
+*:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
+}
+
+/* ============================================================
+   COMPONENT PRIMITIVES — codified from the Figma DS frames
+   ============================================================ */
+
+/* Button — base + variants. Shape: 36px tall, radius 8, Inter 500/14/20. */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 16px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-product);
+  font-size: 14px;
+  font-weight: var(--fw-medium);
+  line-height: 20px;
+  letter-spacing: 0;
+  cursor: pointer;
+  border: 0;
+  box-shadow: var(--shadow-stroke);
+  transition: background 140ms ease, color 140ms ease, box-shadow 140ms ease;
+  white-space: nowrap;
+}
+.btn:focus-visible { box-shadow: var(--shadow-stroke), 0 0 0 3px var(--ring-soft); outline: none; }
+.btn[disabled], .btn[aria-disabled="true"] { opacity: 0.5; pointer-events: none; }
+
+.btn-primary    { background: var(--action-primary-bg); color: var(--action-primary-fg); }
+.btn-primary:hover { background: var(--action-primary-hover); }
+.btn-primary:active{ background: var(--action-primary-press); }
+
+.btn-secondary  { background: var(--action-secondary-bg); color: var(--action-secondary-fg); }
+.btn-secondary:hover { background: var(--action-secondary-hover); }
+
+.btn-ghost      { background: transparent; color: var(--action-ghost-fg); box-shadow: none; }
+.btn-ghost:hover{ background: var(--action-ghost-hover); }
+
+.btn-brand      { background: var(--action-brand-bg); color: var(--action-brand-fg); }
+.btn-brand:hover{ background: var(--action-brand-hover); }
+.btn-brand:active{ background: var(--action-brand-press); }
+
+.btn-danger     { background: var(--action-danger-bg); color: var(--action-danger-fg); }
+.btn-danger:hover{ background: var(--action-danger-hover); }
+
+/* Input — 36px, radius 8, gray-200 stroke */
+.input {
+  display: inline-flex; align-items: center;
+  height: 36px;
+  padding: 0 12px;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  font-family: var(--font-product);
+  font-size: 14px;
+  color: var(--fg);
+  width: 100%;
+}
+.input::placeholder { color: var(--fg-subtle); }
+.input:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+
+/* Card — every documentation frame ships this exact card */
+.card {
+  background: var(--bg-elev);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-6);
+}
+.card-bordered { border: 1px solid var(--border); box-shadow: none; }
+
+/* Badge — pill, 12/16, padding 2/8 */
+.dsbadge {
+  display: inline-flex; align-items: center; gap: 4px;
+  height: 20px;
+  padding: 0 8px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-product);
+  font-size: 12px;
+  font-weight: var(--fw-medium);
+  line-height: 16px;
+  white-space: nowrap;
+}
+.dsbadge-primary    { background: var(--gray-900); color: #FFFFFF; }
+.dsbadge-secondary  { background: var(--gray-100); color: var(--gray-900); }
+.dsbadge-brand      { background: var(--brand-600); color: #FFFFFF; }
+.dsbadge-success    { background: var(--green-600); color: #FFFFFF; }
+.dsbadge-destructive{ background: var(--red-600);   color: #FFFFFF; }
+.dsbadge-informative{ background: var(--indigo-600);color: #FFFFFF; }
+.dsbadge-warning    { background: var(--amber-600); color: var(--gray-900); }
+
+/* Outlined badge variants — same fg as solid, faint bg + matching border */
+.dsbadge-outline { background: transparent; border: 1px solid currentColor; }
+.dsbadge-outline.dsbadge-success    { color: var(--green-600); }
+.dsbadge-outline.dsbadge-destructive{ color: var(--red-600); }
+.dsbadge-outline.dsbadge-informative{ color: var(--indigo-600); }
+.dsbadge-outline.dsbadge-warning    { color: var(--amber-600); }
+
+/* Document panel — the layout pattern every Figma component frame uses:
+   white outer page → gray-50 inner panel → white card sitting on it.
+   Use it when you're rendering a component spec. */
+.ds-panel {
+  background: var(--gray-50);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+}
+.ds-panel-dark {
+  background: var(--gray-950);
+  color: #FFFFFF;
+  border-radius: var(--radius-lg);
+  padding: 24px;
+}
+
+/* ============================================================
+   MARKETING — cosmic scene, glow, glass pill, black CTA
+   ============================================================ */
+.cosmic-scene {
+  position: relative;
+  background: #000000;
+  color: #fff;
+  overflow: hidden;
+  isolation: isolate;
+  min-height: 100vh;
+}
+.cosmic-scene::before {
+  content: "";
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 12% 18%, rgba(255,255,255,0.75), transparent 60%),
+    radial-gradient(1px 1px at 27% 62%, rgba(255,255,255,0.45), transparent 60%),
+    radial-gradient(1.5px 1.5px at 42% 24%, rgba(255,255,255,0.6), transparent 55%),
+    radial-gradient(1px 1px at 58% 78%, rgba(255,255,255,0.35), transparent 60%),
+    radial-gradient(1px 1px at 69% 14%, rgba(255,255,255,0.55), transparent 60%),
+    radial-gradient(1.5px 1.5px at 82% 46%, rgba(255,255,255,0.7), transparent 55%),
+    radial-gradient(1px 1px at 91% 72%, rgba(255,255,255,0.4), transparent 60%),
+    radial-gradient(1px 1px at 6% 84%, rgba(255,255,255,0.5), transparent 60%);
+  pointer-events: none; z-index: 0; opacity: 0.9;
+}
+.cosmic-scene .planet {
+  position: absolute; left: 50%; top: 78%;
+  transform: translate(-50%, 0);
+  width: 220vw; max-width: 2800px; aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 10%, rgba(240,235,255,0.95) 0%, rgba(240,235,255,0.35) 0.5%, transparent 1%),
+    radial-gradient(circle at 50% 12%, #9A8AEC 0%, #6B57CC 3%, #4A32A8 7%, #2B1970 13%, #120952 22%, #000 40%);
+  filter: blur(0.3px);
+  pointer-events: none; z-index: 0;
+  box-shadow: 0 -30px 120px rgba(136,80,224,0.4), inset 0 40px 120px rgba(255,255,255,0.08);
+}
+.cosmic-scene > * { position: relative; z-index: 1; }
+
+.glow-spot {
+  position: absolute; width: 320px; height: 320px;
+  border-radius: 50%;
+  background: var(--brand-glow);
+  filter: blur(120px);
+  pointer-events: none;
+}
+
+.glass-pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 18px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--radius-pill);
+  color: #fff;
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-body-sm);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: background 160ms ease;
+}
+.glass-pill:hover { background: rgba(255,255,255,0.14); color: #fff; }
+
+.cta-black {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 11px 22px;
+  background: #0B0A0B;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius-pill);
+  color: #fff;
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-body-sm);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.08) inset, 0 8px 24px rgba(0,0,0,0.4);
+  transition: transform 160ms ease;
+}
+.cta-black:hover { transform: translateY(-1px); color: #fff; }
