@@ -475,66 +475,81 @@ function PostDark({ t }) {
 
 function App() {
   const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  const [editing, setEditing] = React.useState(null);
+
   return (
     <>
       <DesignCanvas title="Quely · LinkedIn — Repost Templates">
         <DCSection id="linkedin" title="LinkedIn landscape (1200 × 627) — drop your screenshot, edit copy in Tweaks">
-          <DCArtboard id="minimal" label="01 · Annotated evidence" width={LINKEDIN_W} height={LINKEDIN_H}>
+          <DCArtboard id="minimal" label="01 · Annotated evidence" width={LINKEDIN_W} height={LINKEDIN_H} onEdit={() => setEditing('minimal')}>
             <PostMinimal t={t} />
           </DCArtboard>
-          <DCArtboard id="editorial" label="02 · Newsroom front page" width={LINKEDIN_W} height={LINKEDIN_H}>
+          <DCArtboard id="editorial" label="02 · Newsroom front page" width={LINKEDIN_W} height={LINKEDIN_H} onEdit={() => setEditing('editorial')}>
             <PostEditorial t={t} />
           </DCArtboard>
-          <DCArtboard id="textured" label="03 · Textured & layered" width={LINKEDIN_W} height={LINKEDIN_H}>
+          <DCArtboard id="textured" label="03 · Textured & layered" width={LINKEDIN_W} height={LINKEDIN_H} onEdit={() => setEditing('textured')}>
             <PostTextured t={t} />
           </DCArtboard>
-          <DCArtboard id="dark" label="04 · Dark mode / premium" width={LINKEDIN_W} height={LINKEDIN_H}>
+          <DCArtboard id="dark" label="04 · Dark mode / premium" width={LINKEDIN_W} height={LINKEDIN_H} onEdit={() => setEditing('dark')}>
             <PostDark t={t} />
           </DCArtboard>
         </DCSection>
       </DesignCanvas>
 
-      <TweaksPanel title="Post copy">
-        <TweakSection label="Shared" />
-        <TweakText label="CTA" value={t.cta}
-          onChange={(v) => setTweak('cta', v)} />
+      {editing && (
+        <TweaksPanel
+          key={editing}
+          title={
+            editing === 'minimal' ? 'Edit: 01 · Annotated' :
+            editing === 'editorial' ? 'Edit: 02 · Newsroom' :
+            editing === 'textured' ? 'Edit: 03 · Textured' :
+            'Edit: 04 · Dark'
+          }
+          onClose={() => setEditing(null)}
+        >
+          <TweakSection label="Shared" />
+          <TweakText label="CTA" value={t.cta} onChange={(v) => setTweak('cta', v)} />
 
-        <TweakSection label="01 · Annotated" />
-        <TweakText label="Top date stamp" value={t.v1_topNote}
-          onChange={(v) => setTweak('v1_topNote', v)} />
-        <TweakText label="Margin headline" value={t.v1_circleHighlight}
-          onChange={(v) => setTweak('v1_circleHighlight', v)} />
-        <TweakText label="Margin subtext" value={t.v1_circleSub} multiline
-          onChange={(v) => setTweak('v1_circleSub', v)} />
-        <TweakText label="Bottom note" value={t.v1_bottomNote} multiline
-          onChange={(v) => setTweak('v1_bottomNote', v)} />
+          <TweakSection label="Template Copy" />
+          {editing === 'minimal' && (
+            <>
+              <TweakText label="Top date stamp" value={t.v1_topNote} onChange={(v) => setTweak('v1_topNote', v)} />
+              <TweakText label="Margin headline" value={t.v1_circleHighlight} onChange={(v) => setTweak('v1_circleHighlight', v)} />
+              <TweakText label="Margin subtext" value={t.v1_circleSub} multiline onChange={(v) => setTweak('v1_circleSub', v)} />
+              <TweakText label="Bottom note" value={t.v1_bottomNote} multiline onChange={(v) => setTweak('v1_bottomNote', v)} />
+            </>
+          )}
 
-        <TweakSection label="02 · Newsroom" />
-        <TweakText label="Eyebrow" value={t.v2_eyebrow}
-          onChange={(v) => setTweak('v2_eyebrow', v)} />
-        <TweakText label="Headline (lead)" value={t.v2_headline}
-          onChange={(v) => setTweak('v2_headline', v)} />
-        <TweakText label="Headline (highlighted)" value={t.v2_headlineHighlight}
-          onChange={(v) => setTweak('v2_headlineHighlight', v)} />
-        <TweakText label="Dek / subhead" value={t.v2_dek} multiline
-          onChange={(v) => setTweak('v2_dek', v)} />
-        <TweakText label="Byline" value={t.v2_byline}
-          onChange={(v) => setTweak('v2_byline', v)} />
-        <TweakText label="Exhibit caption" value={t.v2_exhibit}
-          onChange={(v) => setTweak('v2_exhibit', v)} />
+          {editing === 'editorial' && (
+            <>
+              <TweakText label="Eyebrow" value={t.v2_eyebrow} onChange={(v) => setTweak('v2_eyebrow', v)} />
+              <TweakText label="Headline (lead)" value={t.v2_headline} onChange={(v) => setTweak('v2_headline', v)} />
+              <TweakText label="Headline (highlighted)" value={t.v2_headlineHighlight} onChange={(v) => setTweak('v2_headlineHighlight', v)} />
+              <TweakText label="Dek / subhead" value={t.v2_dek} multiline onChange={(v) => setTweak('v2_dek', v)} />
+              <TweakText label="Byline" value={t.v2_byline} onChange={(v) => setTweak('v2_byline', v)} />
+              <TweakText label="Exhibit caption" value={t.v2_exhibit} onChange={(v) => setTweak('v2_exhibit', v)} />
+            </>
+          )}
 
-        <TweakSection label="03 · Textured" />
-        <TweakText label="Eyebrow" value={t.v3_eyebrow}
-          onChange={(v) => setTweak('v3_eyebrow', v)} />
-        <TweakText label="Filed-under line" value={t.v3_filed}
-          onChange={(v) => setTweak('v3_filed', v)} />
+          {editing === 'textured' && (
+            <>
+              <TweakText label="Eyebrow" value={t.v3_eyebrow} onChange={(v) => setTweak('v3_eyebrow', v)} />
+              <TweakText label="Filed-under line" value={t.v3_filed} onChange={(v) => setTweak('v3_filed', v)} />
+            </>
+          )}
 
-        <TweakSection label="04 · Dark" />
-        <TweakText label="Top-right meta tag" value={t.v4_metaTag}
-          onChange={(v) => setTweak('v4_metaTag', v)} />
-        <TweakText label="Bottom takeaway" value={t.v4_takeaway} multiline
-          onChange={(v) => setTweak('v4_takeaway', v)} />
-      </TweaksPanel>
+          {editing === 'dark' && (
+            <>
+              <TweakText label="Top-right meta tag" value={t.v4_metaTag} onChange={(v) => setTweak('v4_metaTag', v)} />
+              <TweakText label="Bottom takeaway" value={t.v4_takeaway} multiline onChange={(v) => setTweak('v4_takeaway', v)} />
+            </>
+          )}
+          
+          <div style={{ marginTop: 16 }}>
+            <TweakButton label="Done" onClick={() => setEditing(null)} />
+          </div>
+        </TweaksPanel>
+      )}
     </>
   );
 }

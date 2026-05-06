@@ -183,7 +183,7 @@ function useTweaks(defaults) {
 // The close button posts __edit_mode_dismissed so the host's toolbar toggle
 // flips off in lockstep; the host echoes __deactivate_edit_mode back which
 // is what actually hides the panel.
-function TweaksPanel({ title = 'Tweaks', noDeckControls = false, children }) {
+function TweaksPanel({ title = 'Tweaks', noDeckControls = false, onClose, children }) {
   const [open, setOpen] = React.useState(true);
   const dragRef = React.useRef(null);
   // Auto-inject a rail toggle when a <deck-stage> is on the page. The
@@ -261,6 +261,7 @@ function TweaksPanel({ title = 'Tweaks', noDeckControls = false, children }) {
 
   const dismiss = () => {
     setOpen(false);
+    if (onClose) onClose();
     window.parent.postMessage({ type: '__edit_mode_dismissed' }, '*');
   };
 

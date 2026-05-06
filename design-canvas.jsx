@@ -641,7 +641,7 @@ async function dcExport(node, w, h, name, kind) {
 }
 
 function DCArtboardFrame({ sectionId, artboard, label, order, onRename, onReorder, onFocus, onDelete }) {
-  const { id: rawId, label: rawLabel, width = 260, height = 480, children, style = {} } = artboard.props;
+  const { id: rawId, label: rawLabel, width = 260, height = 480, onEdit, children, style = {} } = artboard.props;
   const id = rawId ?? rawLabel;
   const ref = React.useRef(null);
   const cardRef = React.useRef(null);
@@ -747,6 +747,7 @@ function DCArtboardFrame({ sectionId, artboard, label, order, onRename, onReorde
             </button>
             {menuOpen && (
               <div className="dc-menu" onPointerDown={(e) => e.stopPropagation()}>
+                {onEdit && <button onClick={() => { setMenuOpen(false); onEdit(); }}>Edit Copy</button>}
                 <button onClick={() => doExport('png')}>Download PNG</button>
                 <button onClick={() => doExport('html')}>Download HTML</button>
                 <hr />
