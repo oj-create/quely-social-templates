@@ -3,8 +3,8 @@
    all copy is editable via the Tweaks panel.
    Reuse for every Reddit / X / community-post repost. */
 
-const LINKEDIN_W = 1200;
-const LINKEDIN_H = 627;
+const LINKEDIN_W = 1080;
+const LINKEDIN_H = 1080;
 
 /* Tweakable defaults — every per-post text field lives here.
    Replace the screenshot via drag-and-drop on the image slot. */
@@ -480,7 +480,7 @@ function App() {
   return (
     <>
       <DesignCanvas title="Quely · LinkedIn — Repost Templates">
-        <DCSection id="linkedin" title="LinkedIn landscape (1200 × 627) — drop your screenshot, edit copy in Tweaks">
+        <DCSection id="linkedin" title="LinkedIn Square (1080 × 1080) — drop your screenshot, edit copy in Tweaks">
           <DCArtboard id="minimal" label="01 · Annotated evidence" width={LINKEDIN_W} height={LINKEDIN_H} onEdit={() => setEditing('minimal')}>
             <PostMinimal t={t} />
           </DCArtboard>
