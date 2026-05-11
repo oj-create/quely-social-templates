@@ -115,7 +115,7 @@ function PostMinimal({ t }) {
         zIndex: 2
       }}>
         <ScreenshotSlot id="repost-v1"
-          width={520} height={420}
+          width={860} height={680}
           tilt={-1.2}
           shadow="0 22px 50px -22px rgba(40,30,60,0.28), 0 6px 14px -6px rgba(40,30,60,0.18)" />
       </div>
@@ -349,24 +349,23 @@ function PostTextured({ t }) {
         {t.v3_eyebrow}
       </div>
 
-      {/* tape strip */}
-      <div style={{
-        position: 'absolute', top: 78, left: '50%',
-        transform: 'translateX(-50%) rotate(-3deg)',
-        width: 140, height: 26,
-        background: 'rgba(247,163,37,0.55)',
-        boxShadow: '0 2px 6px rgba(0,0,0,0.08)',
-        zIndex: 4
-      }} />
-
       {/* Hero */}
       <div style={{
         position: 'absolute', top: '50%', left: '50%',
         transform: 'translate(-50%, -50%)',
         zIndex: 2
       }}>
+        {/* tape strip */}
+        <div style={{
+          position: 'absolute', top: -12, left: '50%',
+          transform: 'translateX(-50%) rotate(-3deg)',
+          width: 140, height: 26,
+          background: 'rgba(247,163,37,0.55)',
+          boxShadow: '0 2px 6px rgba(0,0,0,0.08)',
+          zIndex: 4
+        }} />
         <ScreenshotSlot id="repost-v3"
-          width={540} height={420}
+          width={860} height={680}
           tilt={-1}
           shadow="0 40px 60px -25px rgba(50,30,10,0.4), 0 12px 20px -10px rgba(50,30,10,0.25)" />
       </div>
@@ -447,7 +446,7 @@ function PostDark({ t }) {
         zIndex: 2
       }}>
         <ScreenshotSlot id="repost-v4"
-          width={540} height={420}
+          width={860} height={680}
           shadow="0 0 0 1px rgba(255,255,255,0.08), 0 40px 80px -10px rgba(92,40,164,0.55), 0 0 120px rgba(181,133,242,0.25)" />
       </div>
 
