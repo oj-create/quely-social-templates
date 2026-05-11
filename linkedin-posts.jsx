@@ -130,18 +130,7 @@ function PostMinimal({ t }) {
         <div style={{ fontSize: 28, fontWeight: 700, marginBottom: 4 }}>{t.v1_circleHighlight}</div>
         <div style={{ fontSize: 22, color: '#4B3868' }}>{t.v1_circleSub}</div>
 
-        {/* Hand-drawn arrow pointing to screenshot */}
-        <svg style={{
-          display: 'block',
-          marginTop: 8,
-          marginLeft: -56,
-          pointerEvents: 'none'
-        }} width="220" height="120" viewBox="0 0 220 120" fill="none">
-          <path d="M 160 0 C 130 10, 90 35, 50 75"
-            stroke="#5C28A4" strokeWidth="3" fill="none" strokeLinecap="round" />
-          <path d="M 50 75 L 70 70 M 50 75 L 55 55"
-            stroke="#5C28A4" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
+
       </div>
 
       {/* Bottom-left margin note */}
